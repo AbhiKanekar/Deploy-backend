@@ -10,11 +10,19 @@ import authRoute from "./src/routes/auth.route.js"
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors(
+    {
+        origin: process.env.CLIENT_URL, 
+         credentials: true,
+    }
+));
 app.use(express.json());
 app.use(cookieParser());
 
 connectDB();
+
+app.get("/", (_req, res) => res.send("api is running"));
+
 
 app.use("/api/auth", authRoute);
 
